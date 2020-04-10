@@ -1,0 +1,52 @@
+package com.company;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        String sciezkaKatalogu = "E:\\program\\foldery\\";
+        String nazwaPliku = "tak";
+        String rozszerzenie = ".txt";
+
+        //TWORZENIE NOWYCH FOLDER
+        char plik = 65;
+        for (int i = 0; i <26;i++){
+            new File(sciezkaKatalogu + plik).mkdir();
+
+            for(int j = 1; j<=20;j++){ //wrzucilem 20 bo zbyt dlugo to trwalo
+                File file = new File(sciezkaKatalogu + plik + "\\" + plik + j + rozszerzenie);
+                file.createNewFile();
+                System.out.println(file.getAbsolutePath() + " created");
+                PrintWriter output = new PrintWriter(sciezkaKatalogu + plik + "\\" + plik + j + rozszerzenie);
+                for (int k = 1;k<=20;k++){//wrzucilem 20 bo zbyt dlugo to trwalo
+                    output.println(k);
+                }
+                output.close();
+            }
+            plik = (char) (plik + 1);
+        }
+        //USUNIECIE FOLDER
+        File usun = new File (sciezkaKatalogu);
+
+        String [] poziomI = usun.list();
+        for (int i = 0; i<poziomI.length;i++){
+            File usunII = new File (sciezkaKatalogu + poziomI[i]);
+            String [] poziomII = usunII.list();
+            for(int j = 0;j<poziomII.length;j++){
+                File usunIII = new File (sciezkaKatalogu + poziomI[i] + "\\" + poziomII[j]);
+                usunIII.delete();
+                System.out.println(usunIII.getAbsolutePath() + " deleted");
+            }
+            usunII.delete();
+            System.out.println(usunII.getAbsolutePath() + " deleted");
+        }
+
+    }    }
+
